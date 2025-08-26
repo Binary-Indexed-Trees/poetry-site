@@ -1,0 +1,11 @@
+{
+  "dynasty": "宋词",
+  "id": "song",
+  "poets": [
+    {
+      "name": "苏轼",
+      "id": "su-shi",
+      "works": []
+    }
+  ]
+}

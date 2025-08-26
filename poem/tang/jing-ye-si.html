@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <title>静夜思 - 李白</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div id="breadcrumb-placeholder"></div>
+
+    <main>
+        <div class="container">
+            <h1>静夜思</h1>
+            <p>作者：李白</p>
+            <article class="poem-content">
+                <p>床前明月光，</p>
+                <p>疑是地上霜。</p>
+                <p>举头望明月，</p>
+                <p>低头思故乡。</p>
+            </article>
+            <section class="poem-notes">
+                <h2>注释</h2>
+                <p><strong>静夜思：</strong>在寂静的夜晚所引起的思念。</p>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../../assets/js/state.js"></script>
+    <script src="../../assets/js/ui.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const poemData = {
+                title: '静夜思',
+                path: 'poem/tang/jing-ye-si.html' 
+            };
+            saveRecentPoem(poemData);
+        });
+    </script>
+</body>
+</html>

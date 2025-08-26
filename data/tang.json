@@ -1,0 +1,21 @@
+{
+  "dynasty": "唐诗",
+  "id": "tang",
+  "poets": [
+    {
+      "name": "李白",
+      "id": "li-bai",
+      "works": [
+        {
+          "title": "静夜思",
+          "id": "jing-ye-si"
+        }
+      ]
+    },
+    {
+      "name": "杜甫",
+      "id": "du-fu",
+      "works": []
+    }
+  ]
+}

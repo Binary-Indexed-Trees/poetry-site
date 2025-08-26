@@ -1,0 +1,61 @@
+/*
+ * Theme Styles
+ * This file defines specific color palettes and background images for different sections of the site.
+ */
+
+/* --- TANG DYNASTY THEME (Warm, Bold) --- */
+.theme-tang {
+    background-color: #fdf8e1; /* A light, warm parchment color */
+}
+
+/* Specific styling for Tang dynasty card on homepage (already in layout.css, but can be enhanced) */
+.tang-card {
+    background: linear-gradient(135deg, #a73737, #7a2828);
+}
+.tang-card:hover {
+    background: linear-gradient(135deg, #b54040, #883030);
+}
+
+/* Header/Banner for Tang pages */
+.banner.tang-banner {
+    background-image: url('../img/banners/tang-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding: 4rem 2rem;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+}
+
+/* --- SONG DYNASTY THEME (Elegant, Calm) --- */
+.theme-song {
+    background-color: #f0f4f8; /* A cool, light blue-gray */
+}
+
+/* Specific styling for Song dynasty card on homepage */
+.song-card {
+    background: linear-gradient(135deg, #3a6073, #16222A);
+}
+.song-card:hover {
+    background: linear-gradient(135deg, #427084, #1f2f3a);
+}
+
+
+/* Header/Banner for Song pages */
+.banner.song-banner {
+    background-image: url('../img/banners/song-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding: 4rem 2rem;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Common banner styles */
+.banner h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
