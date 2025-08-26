@@ -9,38 +9,31 @@ async function generateBreadcrumbs() {
     const placeholder = document.querySelector('nav[aria-label="breadcrumb"] ol');
     if (!placeholder) return;
 
-    // Start with the home breadcrumb
-    placeholder.innerHTML = '<li><a href="/poetry-site/index.html">首页</a></li>';
+    placeholder.innerHTML = '<li><a href="/index.html">首页</a></li>';
 
-    // Data lookup map
     const dataMap = {};
 
     const loadData = async (dynastyId) => {
         if (!dataMap[dynastyId]) {
-            const basePath = getBasePath(); // Assuming getBasePath is globally available from main.js
-            const response = await fetch(`${basePath}data/${dynastyId}.json`);
+            const response = await fetch(`/data/${dynastyId}.json`);
             dataMap[dynastyId] = await response.json();
         }
         return dataMap[dynastyId];
     };
 
-    let currentPath = '/poetry-site/';
     if (segments.includes('dynasty')) {
         const dynastyId = segments[segments.indexOf('dynasty') + 1];
         const data = await loadData(dynastyId);
-        currentPath += `dynasty/${dynastyId}.html`;
-        placeholder.innerHTML += `<li> / <a href="${currentPath}">${data.dynasty}</a></li>`;
+        placeholder.innerHTML += `<li> / <a href="/dynasty/${dynastyId}.html">${data.dynasty}</a></li>`;
     }
     
     if (segments.includes('poet')) {
         const poetId = segments[segments.indexOf('poet') + 1];
-        // Guess dynasty from previous segment, a bit fragile but works for this structure
         const dynastyId = segments[segments.indexOf('poet') - 1]; 
         const data = await loadData(dynastyId);
         const poet = data.poets.find(p => p.id === poetId);
         if (poet) {
-            currentPath = `/poetry-site/poet/${poetId}.html`;
-            placeholder.innerHTML += `<li> / <a href="${currentPath}">${poet.name}</a></li>`;
+            placeholder.innerHTML += `<li> / <a href="/poet/${poetId}.html">${poet.name}</a></li>`;
         }
     }
 
@@ -51,9 +44,8 @@ async function generateBreadcrumbs() {
         for (const poet of data.poets) {
             const work = poet.works.find(w => w.id === poemId);
             if (work) {
-                // Add poet breadcrumb if not already there
                 if (!placeholder.innerText.includes(poet.name)) {
-                    placeholder.innerHTML += `<li> / <a href="/poetry-site/poet/${poet.id}.html">${poet.name}</a></li>`;
+                    placeholder.innerHTML += `<li> / <a href="/poet/${poet.id}.html">${poet.name}</a></li>`;
                 }
                 placeholder.innerHTML += `<li> / ${work.title}</li>`;
                 break;
@@ -76,10 +68,10 @@ function displayRecentPoems() {
     }
 
     let html = '<ul>';
-    const basePath = getBasePath ? getBasePath() : './'; // Ensure basePath exists
+    
     recentPoems.forEach(poem => {
-        // 使用 basePath 来确保链接在首页总是正确的
-        html += `<li><a href="${basePath}${poem.path}">${poem.title}</a></li>`;
+        
+        html += `<li><a href="/${poem.path}">${poem.title}</a></li>`;
     });
     html += '</ul>';
     
