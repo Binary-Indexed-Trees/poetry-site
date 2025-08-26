@@ -15,7 +15,12 @@
     {
       "name": "杜甫",
       "id": "du-fu",
-      "works": []
+      "works": [
+        {
+          "title": "春望",
+          "id": "chun-wang"
+        }
+      ]
     }
   ]
 }

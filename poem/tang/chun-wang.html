@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>春望 - 杜甫</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/theme.css">
+</head>
+<body class="theme-tang">
+    <div id="header-placeholder"></div>
+    <div id="breadcrumb-placeholder"></div>
+
+    <main>
+        <div class="container">
+            <h1>春望</h1>
+            <p>作者：杜甫</p>
+            <article class="poem-content">
+                <p>国破山河在，城春草木深。</p>
+                <p>感时花溅泪，恨别鸟惊心。</p>
+                <p>烽火连三月，家书抵万金。</p>
+                <p>白头搔更短，浑欲不胜簪。</p>
+            </article>
+            <section class="poem-notes">
+                <h2>注释</h2>
+                <p>此诗为杜甫在安史之乱中，身陷长安时所作，表达了诗人忧国伤时、念家悲己的感情。</p>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    
+    <script src="../../assets/js/state.js"></script>
+    <script src="../../assets/js/ui.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        // 为“最近浏览”功能记录此诗
+        document.addEventListener('DOMContentLoaded', () => {
+            const poemData = {
+                title: '春望',
+                path: 'poem/tang/chun-wang.html' 
+            };
+            saveRecentPoem(poemData);
+        });
+    </script>
+</body>
+</html>

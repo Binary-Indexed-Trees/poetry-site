@@ -5,7 +5,12 @@
     {
       "name": "苏轼",
       "id": "su-shi",
-      "works": []
+      "works": [
+        {
+          "title": "水调歌头·明月几时有",
+          "id": "shui-diao-ge-tou"
+        }
+      ]
     }
   ]
 }

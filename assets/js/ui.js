@@ -1,58 +1,97 @@
 /**
- * Asynchronously generates and displays breadcrumbs based on the current URL.
+ * A robust breadcrumb generator that correctly handles all page levels.
  */
 async function generateBreadcrumbs() {
-    const path = window.location.pathname;
-    const segments = path.split('/').filter(s => s && !s.endsWith('.html'));
-    const pageFile = path.substring(path.lastIndexOf('/') + 1);
-
     const placeholder = document.querySelector('nav[aria-label="breadcrumb"] ol');
     if (!placeholder) return;
 
+    // Start with the home breadcrumb
     placeholder.innerHTML = '<li><a href="/index.html">首页</a></li>';
 
-    const dataMap = {};
-
+    // --- Data Loading ---
+    // We need all data to figure out a poet's dynasty from just their ID.
+    const dataCache = {};
     const loadData = async (dynastyId) => {
-        if (!dataMap[dynastyId]) {
-            const response = await fetch(`/data/${dynastyId}.json`);
-            dataMap[dynastyId] = await response.json();
+        if (!dataCache[dynastyId]) {
+            try {
+                const response = await fetch(`/data/${dynastyId}.json`);
+                if (!response.ok) throw new Error(`Data file not found for ${dynastyId}`);
+                dataCache[dynastyId] = await response.json();
+            } catch (error) {
+                console.error(error);
+                dataCache[dynastyId] = null; // Mark as failed to avoid retries
+            }
         }
-        return dataMap[dynastyId];
+        return dataCache[dynastyId];
     };
 
-    if (segments.includes('dynasty')) {
-        const dynastyId = segments[segments.indexOf('dynasty') + 1];
-        const data = await loadData(dynastyId);
-        placeholder.innerHTML += `<li> / <a href="/dynasty/${dynastyId}.html">${data.dynasty}</a></li>`;
-    }
-    
-    if (segments.includes('poet')) {
-        const poetId = segments[segments.indexOf('poet') + 1];
-        const dynastyId = segments[segments.indexOf('poet') - 1]; 
-        const data = await loadData(dynastyId);
-        const poet = data.poets.find(p => p.id === poetId);
-        if (poet) {
-            placeholder.innerHTML += `<li> / <a href="/poet/${poetId}.html">${poet.name}</a></li>`;
+    // Load both datasets
+    const tangData = await loadData('tang');
+    const songData = await loadData('song');
+    const allDynasties = [tangData, songData].filter(Boolean); // Filter out nulls if a file fails to load
+
+    // --- URL Parsing ---
+    const path = window.location.pathname; // e.g., /poet/li-bai.html
+    const parts = path.split('/').filter(Boolean); // e.g., ['poet', 'li-bai.html']
+    if (parts.length === 0) return; // Homepage, do nothing more
+
+    const pageType = parts[0];
+    const pageId = parts[parts.length - 1].replace('.html', '');
+
+    // --- Breadcrumb Building Logic ---
+
+    // Case 1: Dynasty Page (e.g., /dynasty/tang.html)
+    if (pageType === 'dynasty') {
+        const dynasty = allDynasties.find(d => d.id === pageId);
+        if (dynasty) {
+            placeholder.innerHTML += `<li> / ${dynasty.dynasty}</li>`;
         }
     }
 
-    if (segments.includes('poem')) {
-        const dynastyId = segments[segments.indexOf('poem') + 1];
-        const poemId = pageFile.replace('.html', '');
-        const data = await loadData(dynastyId);
-        for (const poet of data.poets) {
-            const work = poet.works.find(w => w.id === poemId);
-            if (work) {
-                if (!placeholder.innerText.includes(poet.name)) {
-                    placeholder.innerHTML += `<li> / <a href="/poet/${poet.id}.html">${poet.name}</a></li>`;
-                }
-                placeholder.innerHTML += `<li> / ${work.title}</li>`;
+    // Case 2: Poet Page (e.g., /poet/li-bai.html)
+    else if (pageType === 'poet') {
+        let poet, dynasty;
+        // Find which dynasty the poet belongs to
+        for (const d of allDynasties) {
+            const foundPoet = d.poets.find(p => p.id === pageId);
+            if (foundPoet) {
+                poet = foundPoet;
+                dynasty = d;
                 break;
+            }
+        }
+        if (poet && dynasty) {
+            placeholder.innerHTML += `<li> / <a href="/dynasty/${dynasty.id}.html">${dynasty.dynasty}</a></li>`;
+            placeholder.innerHTML += `<li> / ${poet.name}</li>`;
+        }
+    }
+
+    // Case 3: Poem Page (e.g., /poem/tang/jing-ye-si.html)
+    else if (pageType === 'poem') {
+        const dynastyId = parts[1];
+        const poemId = pageId;
+        
+        const dynasty = allDynasties.find(d => d.id === dynastyId);
+        if (dynasty) {
+            let poet, work;
+            for (const p of dynasty.poets) {
+                const foundWork = p.works.find(w => w.id === poemId);
+                if (foundWork) {
+                    poet = p;
+                    work = foundWork;
+                    break;
+                }
+            }
+            
+            if (poet && work) {
+                placeholder.innerHTML += `<li> / <a href="/dynasty/${dynasty.id}.html">${dynasty.dynasty}</a></li>`;
+                placeholder.innerHTML += `<li> / <a href="/poet/${poet.id}.html">${poet.name}</a></li>`;
+                placeholder.innerHTML += `<li> / ${work.title}</li>`;
             }
         }
     }
 }
+
 
 /**
  * Displays the list of recently viewed poems on the homepage.
@@ -68,9 +107,8 @@ function displayRecentPoems() {
     }
 
     let html = '<ul>';
-    
     recentPoems.forEach(poem => {
-        
+        // Use root-relative path
         html += `<li><a href="/${poem.path}">${poem.title}</a></li>`;
     });
     html += '</ul>';
