@@ -2,47 +2,46 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("main.js loaded");
 
     /**
-     * Loads an HTML component and returns a Promise that resolves when it's done.
-     * @param {string} url - The URL of the component starting from the root.
-     * @param {string} elementId - The ID of the element to load the component into.
-     * @returns {Promise<void>}
+     * Calculates the relative path to the project root for the "Recently Viewed" links.
      */
-    const loadComponent = (url, elementId) => {
-        // **关键修改 1**: 返回 fetch 链，以便我们可以使用 .then()
-        return fetch(url)
-            .then(response => {
-                if (!response.ok) throw new Error(`Component not found at ${url}`);
-                return response.text();
-            })
-            .then(data => {
-                const element = document.getElementById(elementId);
-                if (element) element.innerHTML = data;
-            })
-            .catch(error => {
-                console.error(`Error loading component ${url}:`, error);
-                // 向上抛出错误，以便 Promise 链可以捕获它
-                throw error;
-            });
+    const getBasePath = () => {
+        const path = window.location.pathname;
+        if (path.endsWith('/') || path.endsWith('/index.html')) {
+            return './';
+        }
+        
+        const segments = path.split('/').filter(Boolean);
+        const repoNameIndex = segments.indexOf('poetry-site');
+        const depth = (repoNameIndex !== -1) ? segments.length - repoNameIndex - 1 : segments.length - 1;
+
+        return '../'.repeat(depth > 0 ? depth : 0) || './';
     };
 
-    // 加载页眉和页脚 (这些可以并行加载，不影响面包屑)
-    loadComponent('/components/header.html', 'header-placeholder');
-    loadComponent('/components/footer.html', 'footer-placeholder');
+    /**
+     * Displays the list of recently viewed poems on the homepage.
+     */
+    function displayRecentPoems() {
+        const placeholder = document.getElementById('recent-poems-placeholder');
+        if (!placeholder) return;
 
-    // **关键修改 2**: 只有在面包屑组件加载成功后，才调用 generateBreadcrumbs
-    if (document.getElementById('breadcrumb-placeholder')) {
-        loadComponent('/components/breadcrumb.html', 'breadcrumb-placeholder')
-            .then(() => {
-                // 这个回调函数会在 breadcrumb.html 被成功注入页面后执行
-                console.log("Breadcrumb component loaded. Generating breadcrumbs now.");
-                if (typeof generateBreadcrumbs === 'function') {
-                    generateBreadcrumbs();
-                }
-            });
+        const recentPoems = getRecentPoems(); // from state.js
+        if (recentPoems.length === 0) {
+            placeholder.innerHTML = '<p>暂无浏览记录。</p>';
+            return;
+        }
+
+        const basePath = getBasePath();
+        let html = '<ul>';
+        recentPoems.forEach(poem => {
+            html += `<li><a href="${basePath}${poem.path}">${poem.title}</a></li>`;
+        });
+        html += '</ul>';
+        
+        placeholder.innerHTML = html;
     }
 
-    // “最近浏览”功能不受影响，可以照常执行
-    if (typeof displayRecentPoems === 'function' && (window.location.pathname === '/index.html' || window.location.pathname === '/')) {
+    // Only run displayRecentPoems on the homepage
+    if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
         displayRecentPoems();
     }
 });

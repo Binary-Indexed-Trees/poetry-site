@@ -1,5 +1,5 @@
 const RECENT_POEMS_KEY = 'recentPoems';
-const MAX_RECENT_POEMS = 5;
+const MAX_RECENT_POEMS = 2;
 
 /**
  * Saves a recently viewed poem to localStorage, ensuring no duplicates.
