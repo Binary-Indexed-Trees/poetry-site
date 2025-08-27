@@ -9,6 +9,14 @@
         {
           "title": "静夜思",
           "id": "jing-ye-si"
+        },
+        {
+          "title": "送友人",
+          "id": "songyouren"
+        },
+        {
+          "title": "赠汪伦",
+          "id": "zengwanlun"
         }
       ]
     },
@@ -19,6 +27,32 @@
         {
           "title": "春望",
           "id": "chun-wang"
+        },
+        {
+          "title": "望岳",
+          "id": "wangyue"
+        },
+        {
+          "title": "春夜喜雨",
+          "id": "chunyexiyu"
+        }
+      ]
+    },
+    {
+      "name": "白居易",
+      "id": "bai-juyi",
+      "works": [
+        {
+          "title": "赋得古原草送别",
+          "id": "cao-songbei"
+        },
+        {
+          "title": "问刘十九",
+          "id": "wen-liushijiu"
+        },
+        {
+          "title": "钱塘湖春行",
+          "id": "qiantaghu"
         }
       ]
     }
