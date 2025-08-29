@@ -40,25 +40,32 @@ header {
 
 /* Card Container */
 #team-container {
-  width: 80%;
+  width: 90%;
   height: 100%;
   overflow-y: scroll;
-  padding-top: 100px; /* offset from fixed header */
+  padding-top: 100px;
+  /* offset from fixed header */
 }
 
 #team-members {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 每行显示 2 个成员 */
-  grid-gap: 20px; /* 控制每个卡片之间的间距 */
-  justify-items: center; /* 水平居中卡片 */
-  align-items: center; /* 垂直居中卡片 */
+  grid-template-columns: repeat(2, 1fr);
+  /* 每行显示 2 个成员 */
+  grid-gap: 20px;
+  /* 控制每个卡片之间的间距 */
+  justify-items: center;
+  /* 水平居中卡片 */
+  align-items: center;
+  /* 垂直居中卡片 */
   padding: 20px;
 }
 
 .card {
   position: relative;
-  width: 500px;
-  height: 500px;  /* 调整卡片高度，确保空间足够 */
+  width: 100%;
+  height: 400px;
+  max-width: 400px;
+  aspect-ratio: 3/4;
   background-color: #758a99;
   border-radius: 30px;
   overflow: hidden;
@@ -75,27 +82,33 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; /* 确保图片容器的高度占据卡片的一部分 */
-  border-radius: 30px 30px 0 0; /* 圆角边界，保持头像的圆形 */
+  height: 100%;
+  /* 确保图片容器的高度占据卡片的一部分 */
+  border-radius: 30px 30px 0 0;
+  /* 圆角边界，保持头像的圆形 */
   overflow: hidden;
   transition: 0.5s;
-  background: linear-gradient(135deg, #636363, #626262); /* 初始渐变背景 */
+  background: linear-gradient(135deg, #636363, #626262);
+  /* 初始渐变背景 */
 }
 
 .card:hover .photo {
-  background: linear-gradient(135deg, #636363, #626262); /* 鼠标悬停时渐变变化 */
+  background: linear-gradient(135deg, #636363, #626262);
+  /* 鼠标悬停时渐变变化 */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
 .card .photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 确保头像图片按比例覆盖容器 */
+  object-fit: cover;
+  /* 确保头像图片按比例覆盖容器 */
   transition: 0.5s;
 }
 
 .card:hover .photo img {
-  opacity: 0.8; /* 头像变为半透明 */
+  opacity: 0.8;
+  /* 头像变为半透明 */
 }
 
 .card h1 {
@@ -127,32 +140,37 @@ header {
 }
 
 .card a {
-  display: block; /* 使整个卡片都可以点击 */
+  display: block;
+  /* 使整个卡片都可以点击 */
   color: inherit;
   text-decoration: none;
   padding: 10px;
 }
 
 .card a:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* 鼠标悬停时的样式 */
+  background-color: rgba(255, 255, 255, 0.1);
+  /* 鼠标悬停时的样式 */
 }
 
 /* 滚动效果 */
 #team-container {
   overflow-y: scroll;
-  height: 80vh; /* 限制容器高度 */
-  scroll-behavior: smooth; /* 平滑滚动效果 */
+  height: 80vh;
+  /* 限制容器高度 */
+  scroll-behavior: smooth;
+  /* 平滑滚动效果 */
 }
 
 /* 响应式设计 */
 @media screen and (max-width: 768px) {
   #team-members {
-    grid-template-columns: 1fr; /* 单列布局 */
+    grid-template-columns: 1fr;
+    /* 单列布局 */
   }
 
   .card {
-    width: 250px;
-    height: 350px;  /* 调整小屏幕时卡片高度 */
+    width: 90%;
+    height: 3/4;
+    /* 调整小屏幕时卡片高度 */
   }
 }
-
