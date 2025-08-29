@@ -18,13 +18,13 @@
     border-radius: 8px;
     text-decoration: none;
     color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .card h2 {
@@ -46,7 +46,7 @@
     padding: 2rem;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* Poet header layout: text left, image right */
@@ -62,15 +62,17 @@
 }
 
 .poet-header figure {
-    flex: 0 0 auto;
-    margin: 0;
+    text-align: left;
+    display: block;
+    margin: 1em 0;
 }
 
 .poet-header img {
     display: block;
-    width: 160px;
+    width: 320px;
     max-width: 30vw;
     height: auto;
+    object-fit: contain;
     border-radius: 6px;
 }
 
@@ -99,7 +101,8 @@
     font-size: 1.2rem;
     line-height: 2;
     margin: 2rem 0;
-    font-family: 'KaiTi', 'STKaiti', serif; /* 优先使用楷体 */
+    font-family: 'KaiTi', 'STKaiti', serif;
+    /* 优先使用楷体 */
 }
 
 .poem-notes {
@@ -110,7 +113,9 @@
 
 /* 最近浏览模块样式 */
 #recent-viewed {
-    margin-top: 2rem;
+    margin-top: 7rem;
+    width: 100%;
+    text-align: center;
 }
 
 /* --- RESPONSIVE DESIGN --- */
