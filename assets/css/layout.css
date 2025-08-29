@@ -49,6 +49,31 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
+/* Poet header layout: text left, image right */
+.poet-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.poet-header p {
+    flex: 1 1 auto;
+    margin: 0;
+}
+
+.poet-header figure {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+.poet-header img {
+    display: block;
+    width: 160px;
+    max-width: 30vw;
+    height: auto;
+    border-radius: 6px;
+}
+
 .list-section ul {
     list-style: none;
     padding-left: 0;
@@ -111,5 +136,17 @@
 
     .banner h1 {
         font-size: 2rem;
+    }
+
+    /* Stack text and image on small screens */
+    .poet-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+    }
+
+    .poet-header img {
+        width: 50%;
+        max-width: 260px;
     }
 }
